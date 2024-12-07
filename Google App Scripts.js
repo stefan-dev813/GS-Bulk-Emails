@@ -26,8 +26,7 @@ function sendEmails(startRow, numOfEmails) {
     const emailAddress = row[0];
     const subject = row[1];
     const body = row[2];
-    // const trackingImageUrl = `${ScriptApp.getService().getUrl()}?event=open&row=${rowIndex}`;
-    // const trackingImageUrl = `?event=open&row=${rowIndex}`;
+    
     const trackingImageUrl = `Deploy_URL?event=open&row=${rowIndex}`; // Replace with your deploye url
 
     try {

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+</head>
+<body>
+  <form id="sendEmailsForm" onsubmit="handleSubmit()">
+    Start Row: <input type="number" name="startRow" required><br>
+    Number of Emails: <input type="number" name="numOfEmails" required><br>
+    <input type="button" value="Send Emails" onclick="handleSubmit()">
+  </form>
+
+  <script>
+    function handleSubmit() {
+      var form = document.getElementById('sendEmailsForm');
+      google.script.run.withSuccessHandler(function() {
+          google.script.host.close();
+        }).processForm({
+          startRow: form.startRow.value,
+          numOfEmails: form.numOfEmails.value
+        });
+    }
+  </script>
+</body>
+</html>

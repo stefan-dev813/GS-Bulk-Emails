@@ -1,6 +1,5 @@
-# Email Automation with Tracking for Google Sheets
 
-This Google Apps Script simplifies bulk email sending directly from a Google Sheet while providing real-time email open tracking.
+# Email Automation with Tracking for Google Sheets
 
 ### Google Sheet Instructure 
 
@@ -9,7 +8,7 @@ This Google Apps Script simplifies bulk email sending directly from a Google She
 
 ## 📋 Features
 
-- **Custom Menu Integration**  
+- **Custom Menu Integration**
   Adds an "Email Sender" menu to your Google Sheet for quick access.
 - **Bulk Email Sending**  
   Sends personalized emails in bulk, pulling dynamic content from your Google Sheet.

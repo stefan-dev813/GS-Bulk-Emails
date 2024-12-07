@@ -88,13 +88,6 @@ Here’s how the script integrates with your Google Sheet:
 
 ## ⚠️ Important Notes
 
-- Ensure your Google account has permission to send emails via Google Apps Script.
-- Use responsibly and comply with email regulations like GDPR or the CAN-SPAM Act.
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to submit issues, feature requests, or pull requests to enhance this project.
+Open Tracking is not working. Using only Google App Scripts is impossible to track the statement of emails. I receommend to use Third-Party such as SendGrid, MailGun, or others.
 
 ---

@@ -59,7 +59,7 @@ The script appends a hidden tracking pixel to your email body to monitor opens.
 
 Here’s how the script integrates with your Google Sheet:
 
-![Screenshot of Email Template](./Email%20Template.png)
+![Screenshot of Email Template](./Email%20Template1.png)
 
 ---
 

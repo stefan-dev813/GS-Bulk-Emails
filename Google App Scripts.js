@@ -1,5 +1,6 @@
-const SHEET_ID = 'Sheed_ID'; // Replace with your actual Google Sheet ID
-const SHEET_NAME = 'Sheet_Name'; // Adjusted to your actual sheet name
+const SHEET_ID = 'Sheed_ID';      // Replace with your actual Google Sheet ID
+const SHEET_NAME = 'Sheet_Name';  // Adjusted to your actual sheet name
+const SHEET_ET_1 = 'Sheet_Name';        // Adjusted to your actual sheet name
 
 function onOpen() {
   const ui = SpreadsheetApp.getUi();
@@ -17,27 +18,35 @@ function showDialog() {
 
 function sendEmails(startRow, numOfEmails) {
   const ss = SpreadsheetApp.openById(SHEET_ID);
-  const sheet = ss.getSheetByName(SHEET_NAME);
-  const dataRange = sheet.getRange(startRow, 1, numOfEmails, 3);
+  const sheet = ss.getSheetByName(SHEET_STATE);
+  const dataRange = sheet.getRange(startRow, 1, numOfEmails, 2);
   const data = dataRange.getValues();
+
+  const sheet_et = ss.getSheetByName(SHEET_ET_1);
+  
 
   data.forEach((row, index) => {
     const rowIndex = startRow + index;
     const emailAddress = row[0];
-    const subject = row[1];
-    const body = row[2];
-    
+    const receiverName = row[1];
     const trackingImageUrl = `Deploy_URL?event=open&row=${rowIndex}`; // Replace with your deploye url
+    const subject = sheet_et.getRange(2, 3).getValues()[0][0];
+    const template = sheet_et.getRange(2, 4).getValues()[0][0];
 
+    var firstName = receiverName.split(' ')[0];
+    var changedBody = '';
+    changedBody = template.replace('FIRSTNAME', firstName)
+                          .replace('SUBJECT', subject)
+                          .replace('TRACKINGURL', trackingImageUrl);
     try {
       MailApp.sendEmail({
         to: emailAddress,
         subject: subject,
-        htmlBody: body + `<a href="${trackingImageUrl}" style="height:1px;width:1px;position:absolute;visibility:hidden;">Track Open</a>`
+        htmlBody: changedBody + `<img src="${trackingImageUrl}" style="height:1px;width:1px;display:none;" alt=""/>`
       });
 
       const now = new Date();
-      sheet.getRange(rowIndex, 4).setValue(now);  // Last Sent Email time
+      sheet.getRange(rowIndex, 3).setValue(now);  // Last Sent Email time
     } catch (e) {
       console.error("Failed to send email due to an error:", e.toString());
     }
@@ -60,20 +69,20 @@ function doGet(e) {
 }
 
 function recordEmailOpen(rowIndex) {
+  // rowIndex = 2;
   const ss = SpreadsheetApp.openById(SHEET_ID);
-  const sheet = ss.getSheetByName(SHEET_NAME);
+  const sheet = ss.getSheetByName(SHEET_STATE);
   const now = new Date();
-
-  const emailOpenInfo = sheet.getRange(rowIndex, 5, 1, 3).getValues()[0]; // fetch the range of first open, last open, total opens
+  const emailOpenInfo = sheet.getRange(rowIndex, 4, 1, 3).getValues()[0]; // fetch the range of first open, last open, total opens
   const firstOpenTime = emailOpenInfo[0];
   const lastOpenTime = emailOpenInfo[1];
   const totalOpens = emailOpenInfo[2];
 
-  sheet.getRange(rowIndex, 6).setValue(now);  // Update the last open time
-  sheet.getRange(rowIndex, 7).setValue((totalOpens || 0) + 1);  // Increment the total opens
+  sheet.getRange(rowIndex, 5).setValue(now);  // Update the last open time
+  sheet.getRange(rowIndex, 6).setValue((totalOpens || 0) + 1);  // Increment the total opens
 
   if (!firstOpenTime) {
-    sheet.getRange(rowIndex, 5).setValue(now);  // Set the first open time if not set
+    sheet.getRange(rowIndex, 4).setValue(now);  // Set the first open time if not set
   }
 
   return createTrackingPixelResponse(); // ensure to send a tracking pixel response

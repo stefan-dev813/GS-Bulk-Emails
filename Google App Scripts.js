@@ -11,8 +11,8 @@ function onOpen() {
 
 function showDialog() {
   const html = HtmlService.createHtmlOutputFromFile('form')
-    .setWidth(300)
-    .setHeight(150);
+    .setWidth(400)
+    .setHeight(230);
   SpreadsheetApp.getUi().showModalDialog(html, 'Send Emails');
 }
 
